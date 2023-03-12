@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import img1 from "../assets/img1.jpg";
 import img2 from "../assets/img2.jpg";
 import img3 from "../assets/img3.jpg";
 import img4 from "../assets/img4.jpg";
 import "boxicons";
+import { useAuthState } from '../context/AuthContext';
+import { addtowishlist,addtoread } from "../Services/Book";
+import { bool } from "yup";
+
 
 const  reduceString=(str , num)=>{
   if(str?.length > num)return str.slice(3,num)+ '...'
   else return str
 }
+
+//  const addtoRead =async ()=>{
+//   const state = useAuthState();
+//  addtoWishlist(state.user.id).then(console.log("noerror"));
+
+// }
+
 export default function BookModal({ handleClose, data }) {
+  const [wishlisted, setWishlisted] = useState(false);
+  const [read, setRead] = useState(false);
+  const state = useAuthState();
+  const addtoWishlist =async ()=>{
+    // console.log(state.auth.user.id)
+    addtowishlist(state.auth.user.id).then(res=>console.log(res));
+    setWishlisted(true);
+   }
+   const addtoRead =async()=>{
+    addtoread(state.auth.user.id).then(res=>console.log(res));
+    setRead(true);
+   }
   return (
     <div className="flex flex-col justify-center items-center min-h-screen w-full fixed ">
       <div className="w-4/6 m-auto p-12 rounded-lg ">
@@ -26,8 +49,17 @@ export default function BookModal({ handleClose, data }) {
           </div>
           <div className="ml-10 mt-1 mr-2">
             <div className="flex justify-between">
-              <div className=" bg-blue-100 w-[142px] rounded-lg font-sans text p-2 font-medium pl-10 pr-10 text-blue-500">
-                Reference
+              <div className="flex">
+                  <div onClick={addtoWishlist} className=" flex mr-2 hover:cursor-pointer bg-blue-100 w-[152px] rounded-lg font-sans text p-2 font-medium pl-10 pr-10 text-blue-500">
+                      <div className="m-1">Wishlist</div>
+                      <div className="pt-1 pl-1 ">{wishlisted?<box-icon type='solid' name='user-check'></box-icon>:''}</div>
+                  </div>
+                  <div className="fle">
+                    <div onClick={addtoRead} className="flex mr-2 hover:cursor-pointer bg-blue-100 w-[140px] rounded-lg font-sans text p-2 font-medium pl-10 pr-10 text-blue-500">
+                      <div className="m-1">Read</div>
+                      <div className="pt-1 pl-1 ">{read?<box-icon type='solid' name='user-check'></box-icon>:''}</div>
+                    </div>
+                  </div>
               </div>
               <div onClick={handleClose} className="mt-2">
                 <box-icon name="window-close"></box-icon>

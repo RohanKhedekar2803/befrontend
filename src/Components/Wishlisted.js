@@ -22,14 +22,19 @@ import { getwishlistedbooksbyid } from '../Services/Book';
     var slider = document.getElementById('slider' );
     slider.scrollLeft = slider.scrollLeft + 500;
   };
-
+ 
 
 const Wishlisted = () => {
   const state = useAuthState();
   const [books,useBooks]=useState ();
-useEffect(() => {
-    getwishlistedbooksbyid(state.user.id).then(result => [...useBooks, result])
-  },[]); 
+  useEffect(() => {
+      
+    // console.log(books)
+      getwishlistedbooksbyid(state.auth.user.id).then(result => [...books, result])
+      getwishlistedbooksbyid(state.auth.user.id).then(result => console.log(result))
+    },[books]); 
+
+
   if(books){
     return (
       <div>

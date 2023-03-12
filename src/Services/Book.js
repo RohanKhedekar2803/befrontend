@@ -41,6 +41,14 @@ export const getwishlistedbooksbyid = async (id) => {
     return { err: "error occurred" }
   })
 }
+export const addtowishlist = async (id) =>{
+  console.log(getHeader())
+  return await axios.post(`${baseURL}/api/user/${id}/wishlist`,{}, getHeader()).then((res) => {
+    return res.data;
+  }).catch((err) => {
+    return { err: "error occurred" }
+  })
+}
 
 // export const getrecommendedbooksbyid = async(id)=>{
 //     return await axios.get( tobedone  ,getHeader()).then((res)=>{
@@ -52,7 +60,15 @@ export const getwishlistedbooksbyid = async (id) => {
 
 export const getreadbooksbyid = async (id) => {
 
-  return await axios.get(`https://boockback.onrender.com/api/user/${id}/readBooks`, getHeader()).then((res) => {
+  return await axios.get(`${baseURL}/api/user/${id}/readBooks`, getHeader()).then((res) => {
+    return res.data;
+  }).catch((err) => {
+    return { err: "error occurred" }
+  })
+}
+export const addtoread = async (id) => {
+
+  return await axios.post(`${baseURL}/api/user/${id}/readBooks`,{},getHeader()).then((res) => {
     return res.data;
   }).catch((err) => {
     return { err: "error occurred" }
