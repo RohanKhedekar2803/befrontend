@@ -15,6 +15,7 @@ function Home() {
   const [filterData, setFilterData] = useState([]);
   const [ratingData, setRatingData] = useState([]);
   const [priceData, setPriceData] = useState([]);
+  const [reviewsData, setReviewsData] = useState([]);
 
   let limit = 50;
   const getBooks = async () => {
@@ -42,17 +43,14 @@ function Home() {
     setFilterData(data);
   }
   const handleRating = (data) => {
-    console.log(data)
     setRatingData(data);
   }
   const handlePrice = (data) => {
-    console.log(data)
     setPriceData(data);
   }
-
-
-
-
+  const handleReviews = (data) => {
+    setReviewsData(data);
+  }
 
   useEffect(() => {
     let serverResponse;
@@ -81,6 +79,17 @@ function Home() {
 
     if (priceData) {
       priceData.map((item) => {
+        return bookList.push(
+          <BookShowcaseCard
+            data={item}
+            key={item.id}
+          />
+        )
+      })
+    }
+
+    if (reviewsData) {
+      reviewsData.map((item) => {
         return bookList.push(
           <BookShowcaseCard
             data={item}
@@ -119,7 +128,7 @@ function Home() {
         setBooks(bookList);
       });
     }
-  }, [location, skip, filterData,ratingData,priceData]);
+  }, [location, skip, filterData,ratingData,priceData,reviewsData]);
 
 
   return (
@@ -146,6 +155,7 @@ function Home() {
             onData={handleFilter}
             onDataRating={handleRating}
             onDataPrice={handlePrice}
+            onDataReviews={handleReviews}
             skip={skip}
             setSkip={setSkip}
           />

@@ -23,6 +23,22 @@ export const getFilteredBooks = async (filter) => {
     });
 };
 
+export const getDataByAuthor = async (authorName) => {
+  try {
+    const response = await axios.get(`${baseURL}${bookRoute}/filter`, {
+      // pass your data in the request body
+      author: authorName,
+    }, {
+      // set the request method to "GET"
+      method: 'GET'
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
 export const getBookById = async (id) => {
   return await axios
     .get(`${baseURL}${bookRoute}/${id}`, getHeader())
@@ -96,6 +112,27 @@ export const getBooksByRating = async (limit, skip) => {
 // sort by price
 export const getBooksByPrice = async (limit, skip) => {
   return await axios.get(`${baseURL}${bookRoute}/sort/price?order=asc/dsc&limit=${limit}&skip=${skip}`, getHeader())
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return { err: "error occurred" };
+    });
+}
+
+export const getBooksByReviews = async (limit, skip) => {
+  return await axios.get(`${baseURL}${bookRoute}/sort/noOfReviews?order=asc&limit=${limit}&skip=${skip}`, getHeader())
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return { err: "error occurred" };
+    });
+}
+
+// /books/getallAuthors
+export const getAllAuthors = async () => {
+  return await axios.get(`${baseURL}${bookRoute}/getallAuthors`, getHeader())
     .then((res) => {
       return res.data;
     })
