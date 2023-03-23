@@ -23,22 +23,6 @@ export const getFilteredBooks = async (filter) => {
     });
 };
 
-export const getDataByAuthor = async (authorName) => {
-  try {
-    const response = await axios.get(`${baseURL}${bookRoute}/filter`, {
-      // pass your data in the request body
-      author: authorName,
-    }, {
-      // set the request method to "GET"
-      method: 'GET'
-    });
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-
 export const getBookById = async (id) => {
   return await axios
     .get(`${baseURL}${bookRoute}/${id}`, getHeader())
@@ -57,6 +41,14 @@ export const getwishlistedbooksbyid = async (id) => {
     return { err: "error occurred" }
   })
 }
+export const addtowishlist = async (id) =>{
+  console.log(getHeader())
+  return await axios.post(`${baseURL}/api/user/${id}/wishlist`,{}, getHeader()).then((res) => {
+    return res.data;
+  }).catch((err) => {
+    return { err: "error occurred" }
+  })
+}
 
 // export const getrecommendedbooksbyid = async(id)=>{
 //     return await axios.get( tobedone  ,getHeader()).then((res)=>{
@@ -68,7 +60,15 @@ export const getwishlistedbooksbyid = async (id) => {
 
 export const getreadbooksbyid = async (id) => {
 
-  return await axios.get(`https://boockback.onrender.com/api/user/${id}/readBooks`, getHeader()).then((res) => {
+  return await axios.get(`${baseURL}/api/user/${id}/readBooks`, getHeader()).then((res) => {
+    return res.data;
+  }).catch((err) => {
+    return { err: "error occurred" }
+  })
+}
+export const addtoread = async (id) => {
+
+  return await axios.post(`${baseURL}/api/user/${id}/readBooks`,{},getHeader()).then((res) => {
     return res.data;
   }).catch((err) => {
     return { err: "error occurred" }
@@ -139,4 +139,20 @@ export const getAllAuthors = async () => {
     .catch((err) => {
       return { err: "error occurred" };
     });
+}
+
+
+export const getDataByAuthor = async (authorName) => {
+  try {
+    const response = await axios.get(`${baseURL}${bookRoute}/filter`, {
+      // pass your data in the request body
+      author: authorName,
+    }, {
+      // set the request method to "GET"
+      method: 'GET'
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
 }
