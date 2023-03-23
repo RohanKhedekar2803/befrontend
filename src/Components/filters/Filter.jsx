@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { getBooksByPrice, getBooksByRating, getFilteredBooks, getBooksByReviews, getAllAuthors ,getDataByAuthor} from '../../Services/Book';
 import Select from 'react-select'
 
+
+
 const Filter = (props, { skip, setSkip }) => {
     const [showSort, setShowSort] = useState(false);
     const [filters, setFilters] = useState("");
@@ -29,11 +31,12 @@ const Filter = (props, { skip, setSkip }) => {
 
     useEffect(() => {
         getauthor().then((response) => {
-            setAuthor(response);
+            console.log(response)
+            setAuthor(response.slice(0, 500));
         });
     }, [])
 
-    getDataByAuthor("The captain");
+    getDataByAuthor(filters);
 
 
 
@@ -57,7 +60,7 @@ const Filter = (props, { skip, setSkip }) => {
     const handleSelectChange = (selectedOption) => {
         console.log(selectedOption.value);
         setFilters(selectedOption.value);
-      }
+    }
 
     return (
         <div>
