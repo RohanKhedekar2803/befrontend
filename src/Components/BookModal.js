@@ -100,7 +100,8 @@ export default function BookModal({ handleClose, data }) {
               <div className="mt-[8px] flex">
                 <p className="font-sans text-lg font-normal">Price- </p>
                 <p className="font-sans text-base text-gray-600 font-normal ml-2 pt-1">
-                  {data.Paperback["Hardcover Price"]}
+                  {console.log(data)}
+                  {/* {data.Paperback["Hardcover Price"]} */}
                 </p>
               </div>
               <div className="mt-[8px] flex">
