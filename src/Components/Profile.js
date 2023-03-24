@@ -15,18 +15,18 @@ const Profile = () => {
   const notify = (msg) => toast(msg);
   //useffect and use state to store current bookks data 
   var books = [];
-  for (var i = 0; i < 6; i++) {
-    books.push(<BookShowcaseCard/>);
-  }
-  const slideLeft = () => {
-    var slider = document.getElementById('slider' );
-    console.log(slider)
-    slider.scrollLeft = slider.scrollLeft - 500;
-  };
-  const slideRight = () => {
-    var slider = document.getElementById('slider' );
-    slider.scrollLeft = slider.scrollLeft + 500;
-  };
+  // for (var i = 0; i < 6; i++) {
+  //   books.push(<BookShowcaseCard/>);
+  // }
+  // const slideLeft = () => {
+  //   var slider = document.getElementById('slider' );
+  //   console.log(slider)
+  //   slider.scrollLeft = slider.scrollLeft - 500;
+  // };
+  // const slideRight = () => {
+  //   var slider = document.getElementById('slider' );
+  //   slider.scrollLeft = slider.scrollLeft + 500;
+  // };
   const logout =() =>{
         LogOut(localStorage.getItem("currentUser"));
         localStorage.removeItem("currentUser");
@@ -50,8 +50,8 @@ const Profile = () => {
                         <img src={Ellipse} className="rounded-full ml-16"></img>
                         <div className='p-7 pt-5 text-white '>
                             <div>
-                              <div>{state.user.name}</div>
-                              <div>{state.user.email}</div>
+                              <div>{state.auth.user.name}</div>
+                              <div>{state.auth.user.email}</div>
                             </div>
                         </div>
                     </div>

@@ -23,19 +23,6 @@ export const getFilteredBooks = async (filter) => {
     });
 };
 
-// http://localhost:8000/api/books/filter?author=Seth Godin
-export const getDataByAuthor = async (authorName) => {
-  return await axios
-    .get(`${baseURL}${bookRoute}/filter?author=${authorName}`, getHeader())
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      return { err: "error occurred" };
-    });
-}
-
-
 export const getBookById = async (id) => {
   return await axios
     .get(`${baseURL}${bookRoute}/${id}`, getHeader())
@@ -48,7 +35,16 @@ export const getBookById = async (id) => {
 };
 
 export const getwishlistedbooksbyid = async (id) => {
+  console.log("got wishlisted book")
   return await axios.get(`${baseURL}/api/user/${id}/wishlist`, getHeader()).then((res) => {
+    return res.data;
+  }).catch((err) => {
+    return { err: "error occurred" }
+  })
+}
+export const addtowishlist = async (id) =>{
+  console.log("add to wishlist called")
+  return await axios.post(`${baseURL}/api/user/${id}/wishlist`,{}, getHeader()).then((res) => {
     return res.data;
   }).catch((err) => {
     return { err: "error occurred" }
@@ -65,7 +61,16 @@ export const getwishlistedbooksbyid = async (id) => {
 
 export const getreadbooksbyid = async (id) => {
 
-  return await axios.get(`https://boockback.onrender.com/api/user/${id}/readBooks`, getHeader()).then((res) => {
+  return await axios.get(`${baseURL}/api/user/${id}/readBooks`, getHeader()).then((res) => {
+    console.log(res.data)
+    return res.data;
+  }).catch((err) => {
+    return { err: "error occurred" }
+  })
+}
+export const addtoread = async (id) => {
+
+  return await axios.post(`${baseURL}/api/user/${id}/readBooks`,{},getHeader()).then((res) => {
     return res.data;
   }).catch((err) => {
     return { err: "error occurred" }
@@ -130,6 +135,20 @@ export const getBooksByReviews = async (limit, skip) => {
 // /books/getallAuthors
 export const getAllAuthors = async () => {
   return await axios.get(`${baseURL}${bookRoute}/getallAuthors`, getHeader())
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return { err: "error occurred" };
+    });
+}
+
+
+
+// http://localhost:8000/api/books/filter?author=Seth Godin
+
+export const getDataByAuthor = async (authorName) => {
+  return await axios.get(`${baseURL}${bookRoute}/filter?author=${authorName}`, getHeader())
     .then((res) => {
       return res.data;
     })

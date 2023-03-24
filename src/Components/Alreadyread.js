@@ -29,10 +29,10 @@ const Alreadyread = () => {
   const state = useAuthState();
 const [books,useBooks]=useState ();
   useEffect(() => {
-
-    getreadbooksbyid(state.user.id).then(result => [...useBooks, result])
+    getreadbooksbyid(state.auth.user.id).then(result => console.log('hi'))
+    getreadbooksbyid(state.auth.user.id).then(result => [...books, result])
     
-  },[]);   
+  },[books]);   
   if(books){
     return (
       <div>

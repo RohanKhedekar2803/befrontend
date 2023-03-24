@@ -27,18 +27,14 @@ function Home() {
     const res = await searchBooks(search);
     return res;
   };
-
-
   const handlePrevious = () => {
     if (skip > 1) {
       setSkip(skip - 1);
     }
   }
-
   const handleNext = () => {
     setSkip(skip + 1);
   }
-
   const handleFilter = (data) => {
     console.log(data)
     setFilterData(data);
@@ -78,7 +74,6 @@ function Home() {
         )
       })
     }
-
     if (priceData) {
       priceData.map((item) => {
         return bookList.push(
@@ -89,7 +84,6 @@ function Home() {
         )
       })
     }
-
     if (reviewsData) {
       reviewsData.map((item) => {
         return bookList.push(
