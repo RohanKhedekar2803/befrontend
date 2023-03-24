@@ -68,7 +68,7 @@ export default function BookModal({ handleClose, data }) {
 
             <div className=" align-middle font-sans font-bold text-xl mt-2">
               {/* {data.Title} */}
-              {reduceString(data.Title,150) }
+              {reduceString(data?.Title,150) }
             </div>
 
             <div className="mt-3">
@@ -87,7 +87,7 @@ export default function BookModal({ handleClose, data }) {
               <div className="mt-[8px] flex">
                 <p className="font-sans text-lg font-normal">Language- </p>
                 <p className="font-sans text-base text-gray-600 font-normal ml-2 pt-1">
-                  {data.Language}
+                  {data?.Language}
                 </p>
               </div>
               <div className="mt-[8px] flex">
@@ -107,19 +107,19 @@ export default function BookModal({ handleClose, data }) {
               <div className="mt-[8px] flex">
                 <p className="font-sans text-lg font-normal">Author- </p>
                 <p className="font-sans text-base text-gray-600 font-normal ml-2 pt-1">
-                  {data.Author}
+                  {data?.Author}
                 </p>
               </div>
               <div className="mt-[8px] flex">
                 <p className="font-sans text-lg font-normal">Pages- </p>
                 <p className="font-sans text-base text-gray-600 font-normal ml-2 pt-1">
-                  {data.Pages === "" ? "N/A" : data.Pages}
+                  {data?.Pages === "" ? "N/A" : data?.Pages}
                 </p>
               </div>
               <div className="mt-[8px] flex">
                 <p className="font-sans text-lg font-normal">Publisher- </p>
                 <p className="font-sans text-base text-gray-600 font-normal ml-2 pt-1">
-                  {data.Publisher}
+                  {data?.Publisher}
                 </p>
               </div>
             </div>
@@ -135,5 +135,6 @@ export default function BookModal({ handleClose, data }) {
         </div>
       </div>
     </div>
+    // <></>
   );
 }
