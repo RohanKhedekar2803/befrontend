@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getBooksByPrice, getBooksByRating, getFilteredBooks, getBooksByReviews, getAllAuthors ,getDataByAuthor} from '../../Services/Book';
+import { getBooksByPrice, getBooksByRating, getFilteredBooks, getBooksByReviews, getAllAuthors, getDataByAuthor } from '../../Services/Book';
 import Select from 'react-select'
 
 
@@ -31,14 +31,16 @@ const Filter = (props, { skip, setSkip }) => {
 
     useEffect(() => {
         getauthor().then((response) => {
-            console.log(response)
             setAuthor(response.slice(0, 500));
         });
     }, [])
 
-    getDataByAuthor(filters);
 
-
+    useEffect(() => {
+            getDataByAuthor(filters).then((response) => {
+                props.onDataAuthor(response);
+            })
+    }, [filters])
 
     function handleClickSortByPrice() {
         sortByPrice().then((response) => {
@@ -57,10 +59,13 @@ const Filter = (props, { skip, setSkip }) => {
         });
     }
 
+
+
     const handleSelectChange = (selectedOption) => {
-        console.log(selectedOption.value);
         setFilters(selectedOption.value);
     }
+
+
 
     return (
         <div>

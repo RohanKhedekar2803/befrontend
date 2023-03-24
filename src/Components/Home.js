@@ -40,6 +40,7 @@ function Home() {
   }
 
   const handleFilter = (data) => {
+    console.log(data)
     setFilterData(data);
   }
   const handleRating = (data) => {
@@ -64,7 +65,8 @@ function Home() {
             key={item.id}
           />
         )
-      })
+      }
+      )
     }
     if (ratingData) {
       ratingData.map((item) => {
@@ -98,7 +100,6 @@ function Home() {
         )
       })
     }
-
     if (query.get("search")) {
       getSearchBooks(query.get("search")).then((response) => {
         serverResponse = response;
@@ -113,7 +114,8 @@ function Home() {
         )
         setBooks(bookList);
       });
-    } else {
+    }
+    else {
       getBooks().then((response) => {
         serverResponse = response;
         serverResponse.map((item) => {
@@ -128,7 +130,7 @@ function Home() {
         setBooks(bookList);
       });
     }
-  }, [location, skip, filterData,ratingData,priceData,reviewsData]);
+  }, [location, skip, filterData, ratingData, priceData, reviewsData]);
 
 
   return (
@@ -152,7 +154,7 @@ function Home() {
         <div className="flex w-full">
           {/* Filter & Sort */}
           <Filter
-            onData={handleFilter}
+            onDataAuthor={handleFilter}
             onDataRating={handleRating}
             onDataPrice={handlePrice}
             onDataReviews={handleReviews}

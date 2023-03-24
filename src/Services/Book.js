@@ -23,19 +23,16 @@ export const getFilteredBooks = async (filter) => {
     });
 };
 
+// http://localhost:8000/api/books/filter?author=Seth Godin
 export const getDataByAuthor = async (authorName) => {
-  try {
-    const response = await axios.get(`${baseURL}${bookRoute}/filter`, {
-      // pass your data in the request body
-      author: authorName,
-    }, {
-      // set the request method to "GET"
-      method: 'GET'
+  return await axios
+    .get(`${baseURL}${bookRoute}/filter?author=${authorName}`, getHeader())
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return { err: "error occurred" };
     });
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
 }
 
 
@@ -58,7 +55,7 @@ export const getwishlistedbooksbyid = async (id) => {
   })
 }
 
-// export const getrecommendedbooksbyid = async(id)=>{
+// export const getrecommendedbooksbyid = `async(id)=>{
 //     return await axios.get( tobedone  ,getHeader()).then((res)=>{
 //         return res.data;
 //     }).catch((err)=>{
