@@ -113,6 +113,7 @@ function Home() {
         )
         setBooks(bookList);
       });
+      
     } else {
       getBooks().then((response) => {
         serverResponse = response;

@@ -22,7 +22,10 @@ var books = [];
     slider.scrollLeft = slider.scrollLeft + 500;
   };
 
-
+  const  reduceString=(str , num)=>{
+    if(str?.length > num)return str.slice(3,num)+ '...'
+    else return str
+  }
 const Recommended = () => {
   return (
     <div>
@@ -31,7 +34,7 @@ const Recommended = () => {
                          <div className=' text-white flex items-center group w-full'>
                             <box-icon name='left-arrow-alt' onClick={slideLeft} size={15} className='bg-white/10 rounded-full opacity-70 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block' ></box-icon>
                               
-                                <div id={'slider'}  className=' flex mx-2 overflow-x-scroll  scrollbar-hide  whitespace-nowrap  scroll-smooth'>
+                                <div id={'slider'}  className='flex overflow-x-scroll  scrollbar-hide  whitespace-nowrap  scroll-smooth  mx-2'>
                                 { books.map((data)=>(
                                       
                                       <SingleBook data={{  name: "bookname" , writer : "auther"}}/>

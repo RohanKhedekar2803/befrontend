@@ -42,9 +42,9 @@ export const getwishlistedbooksbyid = async (id) => {
     return { err: "error occurred" }
   })
 }
-export const addtowishlist = async (id) =>{
+export const addtowishlist = async (userid,bookId) =>{
   console.log("add to wishlist called")
-  return await axios.post(`${baseURL}/api/user/${id}/wishlist`,{}, getHeader()).then((res) => {
+  return await axios.post(`${baseURL}/api/user/${userid}/wishlist`,{bookId}, getHeader()).then((res) => {
     return res.data;
   }).catch((err) => {
     return { err: "error occurred" }
@@ -68,9 +68,9 @@ export const getreadbooksbyid = async (id) => {
     return { err: "error occurred" }
   })
 }
-export const addtoread = async (id) => {
+export const addtoread = async (userid,bookId) => {
 
-  return await axios.post(`${baseURL}/api/user/${id}/readBooks`,{},getHeader()).then((res) => {
+  return await axios.post(`${baseURL}/api/user/${userid}/readBooks`,{bookId},getHeader()).then((res) => {
     return res.data;
   }).catch((err) => {
     return { err: "error occurred" }

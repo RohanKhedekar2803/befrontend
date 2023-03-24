@@ -27,46 +27,47 @@ import { getreadbooksbyid } from '../Services/Book';
 
 const Alreadyread = () => {
   const state = useAuthState();
-const [books,useBooks]=useState ();
+const [books,setBooks]=useState ([]);
   useEffect(() => {
-    getreadbooksbyid(state.auth.user.id).then(result => console.log('hi'))
-    getreadbooksbyid(state.auth.user.id).then(result => [...books, result])
     
-  },[books]);   
-  if(books){
+    getreadbooksbyid(state.auth.user.id).then(result =>setBooks(result))
+
+    
+  },[]);   
+ 
     return (
       <div>
-         <div className='mt-6'>
-                    <div className="flex h-[400px]  w-full p-5">                                      
-                           <div className=' text-white flex items-center group w-full'>
-                              <box-icon name='left-arrow-alt' onClick={slideLeft} size={15} className='bg-white/10 rounded-full opacity-70 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block' ></box-icon>
-                                
-                                  <div id={'slider'}  className=' flex mx-2 overflow-x-scroll  scrollbar-hide  whitespace-nowrap  scroll-smooth'>
-                                  { books.map((data)=>(
-                                        
-                                        <SingleBook data={{  name: "bookname" , writer : "auther"}}/>
-                                    ))}  
-                                  </div>
-  
-                                  <box-icon name='right-arrow-alt' onClick={slideRight} size={15} className='mr-1 bg-white/10 rounded-full opacity-70 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block' ></box-icon>
-                                  
-                              </div>
-                    </div>   
-                  
-              </div>
-              <p>read</p>
-      </div>
-    )
-  }
-  else{
-    return (
+        { books.length>0 ? <div>
+        <div className='mt-6'>
+                   <div className="flex h-[400px]  w-full p-5">                                      
+                          <div className=' text-white flex items-center group w-full'>
+                           
+                             <box-icon name='left-arrow-alt' onClick={slideLeft} size={15} className='bg-white/10 rounded-full opacity-70 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block' ></box-icon>
+                               
+                                 <div id={'slider'}  className='flex overflow-x-scroll  scrollbar-hide  whitespace-nowrap  scroll-smooth  mx-2'>
+                                 { books.map((data)=>(
+                                       
+                                       <SingleBook data={{  name: data.Title , writer : data.Author}}/>
+                                   ))}  
+                                 </div>
+ 
+                                 <box-icon name='right-arrow-alt' onClick={slideRight} size={15} className='mr-1 bg-white/10 rounded-full opacity-70 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block' ></box-icon>
+                                 
+                             </div>
+                   </div>   
+                 
+             </div>
+            
+     </div> :
       <div className='h-[420px] flex justify-center '>
-        <h1 className='mt-[190px] text-2xl'>
-          You haven't Completed any book yet :) 
-      </h1>
+               <h1 className='mt-[190px] text-2xl'>
+                 You haven't Completed any book yet :) 
+             </h1>
+             </div>
+     }
       </div>
+     
     )
   }
-}
 
 export default Alreadyread
