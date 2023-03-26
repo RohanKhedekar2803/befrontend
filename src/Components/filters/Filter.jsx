@@ -1,27 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { getBooksByPrice, getBooksByRating, getFilteredBooks, getBooksByReviews, getAllAuthors, getDataByAuthor } from '../../Services/Book';
+import { getBooksBySort, getAllAuthors, getDataByAuthor, getAllBooks } from '../../Services/Book';
 import Select from 'react-select'
 
 
 
-const Filter = (props, { skip, setSkip }) => {
-    const [showSort, setShowSort] = useState(false);
-    const [filters, setFilters] = useState("");
+const Filter = ({ setAllData, skip }) => {
     const [author, setAuthor] = useState(null);
 
-    const handleShowSort = () => {
-        setShowSort(!showSort)
-    }
-    const sortByPrice = async () => {
-        const res = await getBooksByPrice(50, skip);
-        return res;
-    }
-    const sortByRating = async () => {
-        const res = await getBooksByRating(50, skip);
-        return res;
-    }
-    const sortByReviews = async () => {
-        const res = await getBooksByReviews(50, skip);
+    const getSort = async (sortBy, skip) => {
+        const res = await getBooksBySort(sortBy, 50, skip);
         return res;
     }
     const getauthor = async () => {
@@ -35,42 +22,39 @@ const Filter = (props, { skip, setSkip }) => {
         });
     }, [])
 
+    const reset = async () => {
+        const data = await getAllBooks(50, skip);
+        if (data) {
+            console.log(data)
+            setAllData(data)
+        }
 
-    useEffect(() => {
-            getDataByAuthor(filters).then((response) => {
-                props.onDataAuthor(response);
-            })
-    }, [filters])
-
-    function handleClickSortByPrice() {
-        sortByPrice().then((response) => {
-            props.onDataPrice(response);
-        });
     }
-    function handleClickSortByRating() {
-        sortByRating().then((response) => {
-            props.onDataRating(response);
-        });
-    }
-
-    function handleClickSortByReviews() {
-        sortByReviews().then((response) => {
-            props.onDataReviews(response);
-        });
+    const handleSelectChange = async (selectedOption) => {
+        console.log(selectedOption.value)
+        const data = await getDataByAuthor(selectedOption.value)
+        console.log(data)
+        if (data) {
+            setAllData(data)
+        }
     }
 
-
-
-    const handleSelectChange = (selectedOption) => {
-        setFilters(selectedOption.value);
+    const handleSelectChange2 = async (selectedOption) => {
+        if (selectedOption.value === 'Sort By') {
+            return;
+        }
+        console.log(selectedOption.value)
+        const data = await getBooksBySort(selectedOption.value, 50, skip);
+        console.log(data)
+        if (data) {
+            setAllData(data)
+        }
     }
-
-
 
     return (
-        <div>
+        <div className="grid gap-5 my-5 grid-cols-3 w-full">
             {/* Filters */}
-            <div className="relative inline-block text-left ml-6 mb-6">
+            <div className="w-full ">
                 <Select
                     options={
                         author && author.map((item) => {
@@ -84,41 +68,25 @@ const Filter = (props, { skip, setSkip }) => {
                 />
             </div>
             {/* Sorting */}
-            <div className=" relative inline-block text-left ml-6 mb-6">
-                <div>
-                    <button type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 text-sm font-medium text-[#5F6DF8]  hover:bg-gray-50  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="filter-menu" aria-haspopup="true" aria-expanded="false"
-                        onClick={handleShowSort}
-                    >
-                        Sort By
-                        <svg className="-mr-1 ml-2 h-5 w-5 text-[#5F6DF8] " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                    </button>
-                </div>
-                {
-                    showSort &&
-                    <div className="z-50 origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100" role="menu" aria-orientation="vertical" aria-labelledby="filter-menu">
-                        <div className="py-1" role="none">
-                            <span className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-[#EDEFFF] hover:text-gray-900" role="menuitem"
-                                onClick={
-                                    () => {
-                                        handleClickSortByRating();
-                                    }}
-                            >Ratings</span>
-                            <span className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-[#EDEFFF] hover:text-gray-900" role="menuitem"
-                                onClick={() => {
-                                    handleClickSortByPrice();
-                                }}
-                            >Price</span>
-                            <span className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-[#EDEFFF] hover:text-gray-900" role="menuitem"
-                                onClick={() => {
-                                    handleClickSortByReviews();
-                                }}
-                            >Number of reviews</span>
-                        </div>
-                    </div>
-                }
+            <div className="w-full">
+                <Select
+                    options={
+                        [
+                            { value: "Sort By", label: "Sort By" },
+                            { value: "rating", label: "Ratings" },
+                            { value: "price", label: "Price" },
+                            { value: "noOfReviews", label: "Number of reviews" }
+                        ]
+                    }
+                    onChange={handleSelectChange2}
+                    className="w-full text-[#5F6DF8]"
+                    placeholder="Sort By"
+                />
             </div>
+
+            <button onClick={() => {
+                reset()
+            }} className='bg-[#5F6DF8] px-10 w-max py-1 rounded-md text-white'>Clear Filter</button>
         </div>
     )
 }

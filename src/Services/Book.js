@@ -101,19 +101,19 @@ export const getCategories = async () => {
 }
 
 //sort by rating
-export const getBooksByRating = async (limit, skip) => {
-  return await axios.get(`${baseURL}${bookRoute}/sort/rating?order=asc/dsc&limit=${limit}&skip=${skip}`, getHeader())
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      return { err: "error occurred" };
-    });
-}
+// export const getBooksByRating = async (limit, skip) => {
+//   return await axios.get(`${baseURL}${bookRoute}/sort/rating?order=asc/dsc&limit=${limit}&skip=${skip}`, getHeader())
+//     .then((res) => {
+//       return res.data;
+//     })
+//     .catch((err) => {
+//       return { err: "error occurred" };
+//     });
+// }
 
 // sort by price
-export const getBooksByPrice = async (limit, skip) => {
-  return await axios.get(`${baseURL}${bookRoute}/sort/price?order=asc/dsc&limit=${limit}&skip=${skip}`, getHeader())
+export const getBooksBySort = async (sortBy,limit, skip) => {
+  return await axios.get(`${baseURL}${bookRoute}/sort/${sortBy}?order=asc/dsc&limit=${limit}&skip=${skip}`, getHeader())
     .then((res) => {
       return res.data;
     })
@@ -122,15 +122,15 @@ export const getBooksByPrice = async (limit, skip) => {
     });
 }
 
-export const getBooksByReviews = async (limit, skip) => {
-  return await axios.get(`${baseURL}${bookRoute}/sort/noOfReviews?order=asc&limit=${limit}&skip=${skip}`, getHeader())
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      return { err: "error occurred" };
-    });
-}
+// export const getBooksByReviews = async (limit, skip) => {
+//   return await axios.get(`${baseURL}${bookRoute}/sort/noOfReviews?order=asc&limit=${limit}&skip=${skip}`, getHeader())
+//     .then((res) => {
+//       return res.data;
+//     })
+//     .catch((err) => {
+//       return { err: "error occurred" };
+//     });
+// }
 
 // /books/getallAuthors
 export const getAllAuthors = async () => {

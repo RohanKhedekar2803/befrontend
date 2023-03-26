@@ -2,7 +2,7 @@ import LandingPageHeroComponent from "./LandingPageHeroComponent";
 import React, { useEffect, useState } from "react";
 import { getAllBooks, searchBooks } from "../Services/Book";
 import BookShowcaseCard from "./BookShowcaseCard";
-import { useLocation } from "react-router-dom";
+import { useFetcher, useLocation } from "react-router-dom";
 import Filter from "./filters/Filter";
 
 
@@ -13,15 +13,14 @@ function Home() {
   const [books, setBooks] = useState([]);
   const [skip, setSkip] = useState(1);
   const [filterData, setFilterData] = useState([]);
-  const [ratingData, setRatingData] = useState([]);
-  const [priceData, setPriceData] = useState([]);
-  const [reviewsData, setReviewsData] = useState([]);
+  const [sortData, setSortData] = useState([]);
+  const [allData, setAllData] = useState([])
 
-  let limit = 50;
-  const getBooks = async () => {
-    const res = await getAllBooks(limit, skip);
-    return res;
-  };
+
+  // useEffect(() => {
+
+  // }, [skip])
+
 
   const getSearchBooks = async (search) => {
     const res = await searchBooks(search);
@@ -35,98 +34,86 @@ function Home() {
   const handleNext = () => {
     setSkip(skip + 1);
   }
-  const handleFilter = (data) => {
-    console.log(data)
-    setFilterData(data);
-  }
-  const handleRating = (data) => {
-    setRatingData(data);
-  }
-  const handlePrice = (data) => {
-    setPriceData(data);
-  }
-  const handleReviews = (data) => {
-    setReviewsData(data);
-  }
+
+  const getBooks = async () => {
+    
+    const limit = 50;
+    const res = await getAllBooks(limit, skip);
+    if (res) {
+      setAllData(res)
+    }
+  };
 
   useEffect(() => {
-    let serverResponse;
-    let bookList = [];
+    getBooks()
+  }, [])
 
-    if (filterData) {
-      filterData.map((item) => {
-        return bookList.push(
-          <BookShowcaseCard
-            data={item}
-            key={item.id}
-          />
-        )
-      }
-      )
-    }
-    if (ratingData) {
-      ratingData.map((item) => {
-        return bookList.push(
-          <BookShowcaseCard
-            data={item}
-            key={item.id}
-          />
-        )
-      })
-    }
-    if (priceData) {
-      priceData.map((item) => {
-        return bookList.push(
-          <BookShowcaseCard
-            data={item}
-            key={item.id}
-          />
-        )
-      })
-    }
-    if (reviewsData) {
-      reviewsData.map((item) => {
-        return bookList.push(
-          <BookShowcaseCard
-            data={item}
-            key={item.id}
-          />
-        )
-      })
-    }
-    if (query.get("search")) {
-      getSearchBooks(query.get("search")).then((response) => {
-        serverResponse = response;
-        serverResponse.map((item) => {
-          return bookList.push(
-            <BookShowcaseCard
-              data={item}
-              key={item.id}
-            />
-          )
-        }
-        )
-        setBooks(bookList);
-      });
-    }
-    else {
-      getBooks().then((response) => {
-        serverResponse = response;
-        serverResponse.map((item) => {
-          return bookList.push(
-            <BookShowcaseCard
-              data={item}
-              key={item.id}
-            />
-          )
-        }
-        )
-        setBooks(bookList);
-      });
-    }
-  }, [location, skip, filterData, ratingData, priceData, reviewsData]);
+  // useEffect(() => {
+  //   let serverResponse;
+  //   let bookList = [];
 
+  //   if (filterData) {
+  //     console.log("filterData", filterData)
+  //     filterData.map((item) => {
+  //       return bookList.push(
+  //         <BookShowcaseCard
+  //           data={item}
+  //           key={item.id}
+  //         />
+  //       )
+  //     }
+  //     )
+  //     setBooks(bookList)
+  //   }
+  //   if (sortData) {
+  //     console.log("sort", sortData)
+  //     sortData.map((item) => {
+  //       return bookList.push(
+  //         <BookShowcaseCard
+  //           data={item}
+  //           key={item.id}
+  //         />
+  //       )
+  //     }
+  //     )
+  //     setBooks(bookList)
+  //   }
+  //   if (query.get("search")) {
+  //     getSearchBooks(query.get("search")).then((response) => {
+  //       serverResponse = response;
+  //       serverResponse.map((item) => {
+  //         return bookList.push(
+  //           <BookShowcaseCard
+  //             data={item}
+  //             key={item.id}
+  //           />
+  //         )
+  //       }
+  //       )
+  //       setBooks(bookList);
+  //     });
+  //   }
 
+  //   getBooks();
+
+  //   console.log("Im called", allData)
+  //   allData.map((item) => {
+  //     return bookList.push(
+  //       <BookShowcaseCard
+  //         data={item}
+  //         key={item.id}
+  //       />
+  //     )
+  //   }
+  //   )
+  //   setBooks(bookList);
+
+  // }, [location, skip, filterData, sortData]);
+
+  const updateAllData = (data) => {
+    setAllData(data)
+
+  }
   return (
     <div>
       <LandingPageHeroComponent />
@@ -144,20 +131,20 @@ function Home() {
             Go Back
           </button>
         </div>
-        <div className="h-5" />
-        <div className="flex w-full">
-          {/* Filter & Sort */}
-          <Filter
-            onDataAuthor={handleFilter}
-            onDataRating={handleRating}
-            onDataPrice={handlePrice}
-            onDataReviews={handleReviews}
-            skip={skip}
-            setSkip={setSkip}
-          />
-        </div>
+        {/* Filter & Sort */}
+        <Filter
+          skip={skip}
+          // onDataAuthor={handleFilter}
+          setAllData={updateAllData}
+
+        />
         <div className="grid grid-cols-5 w-full justify-evenly gap-x-5 gap-y-5 mx-5">
-          {books}
+          {
+            allData.map((data) => {
+              return <BookShowcaseCard data={data}></BookShowcaseCard>
+            })
+          }
+
         </div>
         <div className="mt-4 flex justify-center gap-x-2 mb-4">
 
@@ -176,6 +163,7 @@ function Home() {
 
         </div>
       </div>
+
     </div>
   );
 }
