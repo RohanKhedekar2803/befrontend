@@ -52,7 +52,7 @@ const Filter = ({ setAllData, skip }) => {
     }
 
     return (
-        <div className="grid gap-5 my-5 grid-cols-3 w-full">
+        <div className="grid gap-5 my-5 grid-cols-3 w-full ml-5">
             {/* Filters */}
             <div className="w-full ">
                 <Select

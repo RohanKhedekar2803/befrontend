@@ -17,14 +17,22 @@ function Home() {
   const [allData, setAllData] = useState([])
 
 
-  // useEffect(() => {
-
-  // }, [skip])
 
 
   const getSearchBooks = async (search) => {
-    const res = await searchBooks(search);
-    return res;
+    if (query.get("search")) {
+      const res = await searchBooks(search);
+      if (res) {
+        console.log(res)
+        setAllData(res)
+      }
+    }
+    else {
+      const res = await getAllBooks(50, skip);
+      if (res) {
+        setAllData(res)
+      }
+    }
   };
   const handlePrevious = () => {
     if (skip > 1) {
@@ -36,7 +44,6 @@ function Home() {
   }
 
   const getBooks = async () => {
-
     const limit = 50;
     const res = await getAllBooks(limit, skip);
     if (res) {
@@ -45,70 +52,10 @@ function Home() {
   };
 
   useEffect(() => {
+    getSearchBooks(query.get("search"));
     getBooks()
-  }, [])
 
-  // useEffect(() => {
-  //   let serverResponse;
-  //   let bookList = [];
-
-  //   if (filterData) {
-  //     console.log("filterData", filterData)
-  //     filterData.map((item) => {
-  //       return bookList.push(
-  //         <BookShowcaseCard
-  //           data={item}
-  //           key={item.id}
-  //         />
-  //       )
-  //     }
-  //     )
-  //     setBooks(bookList)
-  //   }
-  //   if (sortData) {
-  //     console.log("sort", sortData)
-  //     sortData.map((item) => {
-  //       return bookList.push(
-  //         <BookShowcaseCard
-  //           data={item}
-  //           key={item.id}
-  //         />
-  //       )
-  //     }
-  //     )
-  //     setBooks(bookList)
-  //   }
-  //   if (query.get("search")) {
-  //     getSearchBooks(query.get("search")).then((response) => {
-  //       serverResponse = response;
-  //       serverResponse.map((item) => {
-  //         return bookList.push(
-  //           <BookShowcaseCard
-  //             data={item}
-  //             key={item.id}
-  //           />
-  //         )
-  //       }
-  //       )
-  //       setBooks(bookList);
-  //     });
-  //   }
-
-  //   getBooks();
-
-  //   console.log("Im called", allData)
-  //   allData.map((item) => {
-  //     return bookList.push(
-  //       <BookShowcaseCard
-  //         data={item}
-  //         key={item.id}
-  //       />
-  //     )
-  //   }
-  //   )
-  //   setBooks(bookList);
-
-  // }, [location, skip, filterData, sortData]);
+  }, [location, skip])
 
   const updateAllData = (data) => {
     setAllData(data)
@@ -122,19 +69,21 @@ function Home() {
         <div className="h-10" />
         <div className="mx-5 text-black font-['DM Sans'] font-semibold text-3xl">
           Categories{" "}
-          <button
-            className="text-[#5F6DF8] font-semibold text-sm p-1 ml-2 rounded-lg bg-[#EDEFFF]"
-            onClick={() => {
-              window.history.back();
-            }}
-          >
-            Go Back
-          </button>
+          {
+            query.get("search") &&
+            <button
+              className="text-[#5F6DF8] font-semibold text-sm p-1 ml-2 rounded-lg bg-[#EDEFFF]"
+              onClick={() => {
+                window.history.back();
+              }}
+            >
+              Clear Search
+            </button>
+          }
         </div>
         {/* Filter & Sort */}
         <Filter
           skip={skip}
-          // onDataAuthor={handleFilter}
           setAllData={updateAllData}
 
         />
