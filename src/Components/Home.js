@@ -36,7 +36,7 @@ function Home() {
   }
 
   const getBooks = async () => {
-    
+
     const limit = 50;
     const res = await getAllBooks(limit, skip);
     if (res) {

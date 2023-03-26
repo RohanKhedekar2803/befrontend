@@ -25,12 +25,12 @@ export default function BookModal({ handleClose, data }) {
   const [read, setRead] = useState(false);
   const state = useAuthState();
   const addtoWishlist =async ()=>{
-    // console.log(state.auth.user.id)
-    addtowishlist(state.auth.user.id).then(res=>console.log(res));
+    console.log(state.auth.user.id,data._id)
+    addtowishlist(state.auth.user.id,data._id).then(res=>console.log(res));
     setWishlisted(true);
    }
    const addtoRead =async()=>{
-    addtoread(state.auth.user.id).then(res=>console.log(res));
+    addtoread(state.auth.user.id,data._id).then(res=>console.log(res));
     setRead(true);
    }
   return (
