@@ -143,12 +143,41 @@ export const getAllAuthors = async () => {
     });
 }
 
+export const getAllCategories = async()=>{
+  return await axios.get(`${baseURL}${bookRoute}/categories`, getHeader())
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return { err: "error occurred" };
+    });
+}
 
 
 // http://localhost:8000/api/books/filter?author=Seth Godin
 
 export const getDataByAuthor = async (authorName) => {
   return await axios.get(`${baseURL}${bookRoute}/filter?author=${authorName}`, getHeader())
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return { err: "error occurred" };
+    });
+}
+
+export const getByPrice = async (minPrice , maxPrice) => {
+  return await axios.get(`${baseURL}${bookRoute}/filter?minPrice=${minPrice}&maxPrice=${maxPrice}`, getHeader())
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return { err: "error occurred" };
+    });
+}
+
+export const getDataByCategory = async (category) => {
+  return await axios.get(`${baseURL}${bookRoute}/filter?category=${category}`, getHeader())
     .then((res) => {
       return res.data;
     })
