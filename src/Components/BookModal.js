@@ -7,6 +7,8 @@ import "boxicons";
 import { useAuthState } from "../context/AuthContext";
 import { addtowishlist, addtoread } from "../Services/Book";
 import { bool } from "yup";
+import BookPlaceHolder from "../assets/book_placeholder.png";
+import SingleBook from "./SingleBook";
 
 const reduceString = (str, num) => {
   if (str?.length > num) return str.slice(0, num) + "...";
@@ -19,7 +21,15 @@ const reduceString = (str, num) => {
 
 // }
 
+
 export default function BookModal({ handleClose, data }) {
+  const getRating = ()=>{
+   
+    return new Array(Math.floor(data['Rating out of 5 stars'])).fill(0) ;
+  }
+
+  
+  console.log(data,data.Title)
   const [wishlisted, setWishlisted] = useState(false);
   const [read, setRead] = useState(false);
   const state = useAuthState();
@@ -32,130 +42,84 @@ export default function BookModal({ handleClose, data }) {
     addtoread(state.auth.user.id, data._id).then((res) => console.log(res));
     setRead(true);
   };
+
+
   return (
-    <div className="w-full min-h-screen absolute flex justify-center items-center ">
-<div className="flex flex-col justify-center items-center min-h-screen  max-w-[90%] overflow-hidden md:w-[80%] lg:w-[70%]  fixed mx-auto roun ded-lg">
-      <div className="py-5 bg-white flex flex-col md:flex-row">
-        <div className="hidden md:block  h-auto  ">
-          <div>
-            <img src={img4} className="w-auto h-auto  " alt="" />
-          </div>
-          <div className="flex  my-3">
-            <img src={img1} className=" w-1/3  " alt="" />
-            <img src={img2} className=" w-1/3 pl-3 " alt="" />
-            <img src={img3} className=" w-1/3 pl-3 " alt="" />
-          </div>
-        </div>
-        <div className="mt-1 ">
-          <div className="flex justify-center items-center">
-            <div className="flex flex-col">
-              <div
-                onClick={addtoWishlist}
-                className=" flex  hover:cursor-pointer bg-blue-100 w-[152px]   my-2.5 rounded-lg font-sans text p-2 font-medium px-10 text-blue-500"
-              >
-                <div className="">Wishlist</div>
-                <div className="pt-1 pl-1 ">
-                  {wishlisted ? (
-                    <box-icon type="solid" name="user-check"></box-icon>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-              <div className="fle">
-                <div
-                  onClick={addtoRead}
-                  className="flex  hover:cursor-pointer bg-blue-100 w-[140px] rounded-lg font-sans text p-2 font-medium pl-10 pr-10 text-blue-500"
-                >
-                  <div className="">Read</div>
-                  <div className="pt-1 pl-1 ">
-                    {read ? (
-                      <box-icon type="solid" name="user-check"></box-icon>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* <div onClick={handleClose} className="mt-2  top-10">
-              <box-icon name="window-close"></box-icon>
-            </div> */}
-          </div>
 
-          <div className="  w-full text-center break-all text-sm align-middle font-sans font-bold  px-5 mt-2">
-            {/* {data.Title} */}
-            {reduceString(data?.Title, 35)}
-          </div>
+    <div className="w-full min-h-screen bg-black/20 absolute flex justify-center items-center ">
+      <div className=" bg-white overflow-y-scroll max-h-[70vh] md:max-h-screen gap-5 grid grid-cols-1 lg:grid-cols-[4fr_7fr]  rounded-md p-5   max-w-[90%] overflow-hidden md:w-[80%] lg:w-[70%]  fixed mx-auto roun ded-lg">
+<div className="col w-full h-full flex justify-center items-start">
+   <div className="card bg-[#EDEFFF]/70 p-2.5 rounded-xl w-11/12  md:w-full px-2.5">
+   <div className="card-bg rounded-md w-full p-2.5 bg-cover ">
 
-          <div className="mt-3">
-            <div className="mt-2 flex">
-              <p className="font-sans text-lg font-normal">
-                Rating : {data["Rating out of 5 stars"]}/5
-              </p>
-            </div>
+    <div className="bg-black min-h-[30vh] text-white flex-col p-2.5 text-center justify-center items-center flex rounded-md">
+      <h1 className="text-white font-bold py-5">{data.Title.substr(0,40).concat('...')}</h1>
+      <p className="w-full text-right"> ~ {data.Author}</p>
+    </div>
 
-            <div className="mt-[8px] flex">
-              <p className="font-sans text-lg font-normal">Sub-Category-</p>
-              <p
-                className="font-sanstext-base text-gray-600 font-normal 
-                 pt-1"
-              >
-                {data["Sub-Category"]}
-              </p>
-            </div>
-            <div className="mt-[8px] flex">
-              <p className="font-sans text-lg font-normal">Language- </p>
-              <p className="font-sans text-base text-gray-600 font-normal  pt-1">
-                {data?.Language}
-              </p>
-            </div>
-            <div className="mt-[8px] flex">
-              <p className="font-sans text-lg font-normal">ISBN- </p>
-              <p className="font-sans text-base text-gray-600 font-normal  pt-1">
-                10{" "}
-              </p>
-            </div>
+   </div>
+   
+   <div className="content text-black">
+      <h1 className="py-2.5 text-xl font-bold text-[#5F6DF8]"> {data['Sub-Category']}</h1>
+      <div className="rating ">
+  Rating - { getRating().map((ele)=>{
+    return <i class='bx bxs-star text-[#F4C055]'></i>
+  })}
+ </div>
+      <h1 className="font-bold my-2.5"> ₹ {data['Paperback/Hardcover Price']}</h1>
+    </div>
+   </div>
+</div>
 
-            <div className="mt-[8px] flex">
-              <p className="font-sans text-lg font-normal">Price- </p>
-              <p className="font-sans text-base text-gray-600 font-normal  pt-1">
-                {console.log(data)}
-                {/* {data.Paperback["Hardcover Price"]} */}
-              </p>
-            </div>
-            <div className="mt-[8px] flex">
-              <p className="font-sans text-lg font-normal">Author- </p>
-              <p className="font-sans text-base text-gray-600 font-normal  pt-1">
-                {data?.Author}
-              </p>
-            </div>
-            <div className="mt-[8px] flex">
-              <p className="font-sans text-lg font-normal">Pages- </p>
-              <p className="font-sans text-base text-gray-600 font-normal  pt-1">
-                {data?.Pages === "" ? "N/A" : data?.Pages}
-              </p>
-            </div>
-            <div className="mt-[8px] flex">
-              <p className="font-sans text-lg font-normal">Publisher- </p>
-              <p className="font-sans text-base text-gray-600 font-normal  pt-1">
-                {data?.Publisher}
-              </p>
-            </div>
-          </div>
-          <div>
-            <button className="flex bg-blue-500 rounded-lg w-[450px] text-white mt-3 h-[50px] py-3 justify-center">
-              <a href={data["URL-TITLE"]}>Buy Ebook / Hardcover Online</a>
-              <div className="">
-                <box-icon name="link-external" color="white"></box-icon>
-              </div>
-            </button>
-          </div>
-        </div>
+
+<div className="col px-2.5">
+<div className="flex justify-between items-cent">
+<div className="flex p-2.5 rounded-md mb-2.5 w-max rounde-md bg-[#EDEFFF] text-[#5F6DF8] justify-between items-center">
+  {data['Sub-Category']}
+ </div>
+ <div className="close">
+ <i class='bx bxs-x-circle text-3xl cursor-pointer text-red-500' onClick={()=>handleClose()}></i>
+ </div>
+</div>
+ <h1 className="font-bold text-xl "> {data.Title} </h1>
+
+
+
+ <div className="my-2.5">
+   <h1 className="text-gray-500 "> <span className="font-semibold text-xl text-black"> Sub Category - </span> {data['Sub-Category']}  </h1>
+ </div>
+
+ <div className="my-2.5">
+   <h1 className="text-gray-500 "> <span className="font-semibold text-xl text-black"> Languages - </span> {data['Language']}  </h1>
+ </div>
+
+ <div className="my-2.5">
+   <h1 className="text-gray-500 "> <span className="font-semibold text-xl text-black"> ISBN - </span> {data['ISBN-10']}  </h1>
+ </div>
+
+  <div className="my-2.5">
+   <h1 className="text-gray-500 "> <span className="font-semibold text-xl text-black"> Weight - </span> {data['Item Weight']}  </h1>
+ </div>
+
+ <div className="my-2.5">
+   <h1 className="text-gray-500 "> <span className="font-semibold text-xl text-black"> Price - </span> {data['Paperback/Hardcover Price']}  </h1>
+ </div>
+
+ <div className="my-2.5">
+   <h1 className="text-gray-500 "> <span className="font-semibold text-xl text-black"> Pages - </span> {data['Pages']}  </h1>
+ </div>
+
+ <div className="my-2.5">
+   <h1 className="text-gray-500 "> <span className="font-semibold text-xl text-black"> Publisher - </span> {data['Publisher']}  </h1>
+ </div>
+ <a href={data['URL-TITLE']} rel="noreferrer" target='_blank'>
+<button  className="bg-[#5F6DF8] text-lg my-5 w-8/12 rounded-md text-white px-2.5 py-5">Buy Ebook / Hardcover <i class='bx bx-link-external align-middle' ></i> </button>
+
+</a>
+</div>
+
       </div>
-    </div>
-
-    </div>
+     </div>
     // <></>
   );
 }

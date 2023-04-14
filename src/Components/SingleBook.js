@@ -4,7 +4,7 @@ import BookPlaceHolder from "../assets/book_placeholder.png";
 const SingleBook = ({data}) => {
 
   const  reduceString=(str , num)=>{
-    if(str?.length > num)return str.slice(3,num)+ '..'
+    if(str?.length > num)return str.slice(0,num)+ '..'
     else return str
   }
   return (

@@ -8,3 +8,7 @@
     width: 100%;
     background-image: url('./assets/LandingHero.webp');
 }
+
+.card-bg{
+background-image: url('./assets/book_placeholder.png');
+}
