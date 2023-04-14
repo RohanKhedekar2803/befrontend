@@ -34,7 +34,7 @@ const Signup = () => {
   });
 
   return (
-    <div className="max-h-screen overflow-hidden font-DMsans pl-10 w-full grid grid-cols-2  bg-white ">
+    <div className="max-h-screen py-10 overflow-hidden font-DMsans mx-auto w-full grid grid-cols-1 md:grid-cols-2   bg-white ">
       <div className="w-full flex justify-center items-center flex-col">
         <ToastContainer
           position="bottom-center"
@@ -140,7 +140,7 @@ const Signup = () => {
           </form>
         </div>
       </div>
-      <div className="col w-full flex justify-center items-center max-h-screen  overflow-hidden">
+      <div className="hidden w-full md:flex justify-center items-center max-h-screen  overflow-hidden">
         <img
           src={hero}
           className="max-h-[100vh] w-full object-cover object-top "

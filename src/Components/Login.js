@@ -4,7 +4,7 @@ import logo from "../assets/logo.svg";
 import hero from "../assets/hero.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link , useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginUser, RegisterUser } from "../Services/Auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,20 +32,20 @@ const Login = () => {
         notify(res.err);
       } else {
         console.log(res);
-        const { token} = res.user;
+        const { token } = res.user;
         const user = res.user;
         updateUser({ user, token });
         localStorage.setItem("currentUser", JSON.stringify(user));
         localStorage.setItem("token", token.toString());
         notify("Login successfull !!");
-        navigate('/home')
+        navigate("/home");
       }
     },
   });
 
   return (
-    <div className="max-h-screen overflow-hidden font-DMsans pl-10 w-full grid grid-cols-2  bg-white ">
-      <div className="w-full flex justify-center items-center flex-col">
+    <div className="max-h-screen overflow-hidden font-DMsans mx-auto w-full grid grid-cols-1 md:grid-cols-2  bg-white ">
+      <div className="w-full py-10 md:py-0 flex justify-center items-center flex-col">
         <ToastContainer
           position="bottom-center"
           autoClose={5000}
@@ -129,7 +129,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-      <div className="col w-full flex justify-center items-center max-h-screen  overflow-hidden">
+      <div className="hidden  col w-full md:flex justify-center items-center max-h-screen  overflow-hidden">
         <img
           src={hero}
           className="max-h-[100vh] w-full object-cover object-top "
