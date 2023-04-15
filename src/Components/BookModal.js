@@ -34,13 +34,23 @@ export default function BookModal({ handleClose, data }) {
   const [read, setRead] = useState(false);
   const state = useAuthState();
   const addtoWishlist = async () => {
-    console.log(state.auth.user.id, data._id);
+    if(setWishlisted){
+      alert(`You have already added book to readlist !!`)
+      return;
+    }
     addtowishlist(state.auth.user.id, data._id).then((res) => console.log(res));
     setWishlisted(true);
+    alert('added book to wishlist successfully !!')
   };
   const addtoRead = async () => {
+    if(setRead){
+      alert(`You have already added book to readlist !!`)
+      return;
+    }
     addtoread(state.auth.user.id, data._id).then((res) => console.log(res));
     setRead(true);
+    alert('added book to readlist successfully !!')
+
   };
 
 
@@ -48,7 +58,7 @@ export default function BookModal({ handleClose, data }) {
 
     <div className="w-full min-h-screen bg-black/20 absolute flex justify-center items-center ">
       <div className=" bg-white overflow-y-scroll max-h-[70vh] md:max-h-screen gap-5 grid grid-cols-1 lg:grid-cols-[4fr_7fr]  rounded-md p-5   max-w-[90%] overflow-hidden md:w-[80%] lg:w-[70%]  fixed mx-auto roun ded-lg">
-<div className="col w-full h-full flex justify-center items-start">
+<div className="col flex-col w-full h-full flex justify-start items-center">
    <div className="card bg-[#EDEFFF]/70 p-2.5 rounded-xl w-11/12  md:w-full px-2.5">
    <div className="card-bg rounded-md w-full p-2.5 bg-cover ">
 
@@ -69,6 +79,11 @@ export default function BookModal({ handleClose, data }) {
       <h1 className="font-bold my-2.5"> ₹ {data['Paperback/Hardcover Price']}</h1>
     </div>
    </div>
+
+ <div className="my-2 5">
+ <button onClick={()=>addtoRead()} className="w-full p-2.5 my-2.5 bg-[#5F6DF8] rounded-md text-white ">  Already Read The Book ? </button>
+   <button onClick={()=>addtoWishlist()} className="w-full p-2.5 my-2.5 bg-[#5F6DF8] rounded-md text-white ">  Add Book To Wishlist </button>
+ </div>
 </div>
 
 
@@ -114,7 +129,6 @@ export default function BookModal({ handleClose, data }) {
  </div>
  <a href={data['URL-TITLE']} rel="noreferrer" target='_blank'>
 <button  className="bg-[#5F6DF8] text-lg my-5 w-8/12 rounded-md text-white px-2.5 py-5">Buy Ebook / Hardcover <i class='bx bx-link-external align-middle' ></i> </button>
-
 </a>
 </div>
 
