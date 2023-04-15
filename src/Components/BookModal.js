@@ -66,7 +66,7 @@ export default function BookModal({ handleClose, data }) {
     <div className="w-full min-h-screen bg-black/20 absolute flex justify-center items-center ">
       <div className=" bg-white overflow-y-scroll max-h-[70vh] md:max-h-screen gap-5 grid grid-cols-1 lg:grid-cols-[4fr_7fr]  rounded-md p-5   max-w-[90%] overflow-hidden md:w-[80%] lg:w-[70%]  fixed mx-auto roun ded-lg">
 <div className="col flex-col w-full h-full flex justify-start items-center">
-   <div className="card bg-[#EDEFFF]/70 p-2.5 rounded-xl w-11/12  md:w-full px-2.5">
+   <div className="card bg-[#EDEFFF]/70 p-2.5 rounded-xl    w-full px-2.5">
    <div className="card-bg rounded-md w-full p-2.5 bg-cover ">
 
     <div className="bg-black min-h-[30vh] text-white flex-col p-2.5 text-center justify-center items-center flex rounded-md">
@@ -97,20 +97,33 @@ export default function BookModal({ handleClose, data }) {
 
 <div className="col px-2.5">
 <div className="flex justify-between items-cent">
-<div className="flex p-2.5 rounded-md mb-2.5 w-max rounde-md bg-[#EDEFFF] text-[#5F6DF8] justify-between items-center">
-  {data['Category']}
+<div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md  bg-[#EDEFFF] text-[#5F6DF8]" onClick={addwishlist}> Add to wishlist
+{data['Category']}
   
  </div>
+
+ <div className="hidden justify-between md:flex">
+ <div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md  bg-[#EDEFFF] text-[black]" onClick={addwishlist}> Add to wishlist
+ {wishlisted?<box-icon name='check'></box-icon>:<div></div>}
+ </div>
+  <div className="font-bold mx-2 my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md bg-[#EDEFFF] text-[black]" onClick={addread}> Already Read
+  {read?<box-icon name='check'></box-icon>:<div></div>}
+  </div>
+ </div>
+ <div className="close">
+ <i class='bx bxs-x-circle text-3xl cursor-pointer text-red-500' onClick={()=>handleClose()}></i>
+ </div>
+</div>
+
+<div className="md:hidden w-full  block">
  <div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md  bg-[#EDEFFF] text-[#5F6DF8]" onClick={addwishlist}> Add to wishlist
  {wishlisted?<box-icon name='check'></box-icon>:<div></div>}
  </div>
   <div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md bg-[#EDEFFF] text-[#5F6DF8]" onClick={addread}> Already Read
   {read?<box-icon name='check'></box-icon>:<div></div>}
   </div>
- <div className="close">
- <i class='bx bxs-x-circle text-3xl cursor-pointer text-red-500' onClick={()=>handleClose()}></i>
  </div>
-</div>
+
  <h1 className="font-bold text-xl "> {data.Title} </h1>
 
 
@@ -143,7 +156,7 @@ export default function BookModal({ handleClose, data }) {
    <h1 className="text-gray-500 "> <span className="font-semibold text-xl text-black"> Publisher - </span> {data['Publisher']}  </h1>
  </div>
  <a href={data['URL-TITLE']} rel="noreferrer" target='_blank'>
-<button  className="bg-[#5F6DF8] text-lg my-5 w-8/12 rounded-md text-white px-2.5 py-5">Buy Ebook / Hardcover <i class='bx bx-link-external align-middle' ></i> </button>
+<button  className="bg-[#5F6DF8] text-lg my-5  w-full md:w-8/12 rounded-md text-white px-2.5 py-5">Buy Ebook / Hardcover <i class='bx bx-link-external align-middle' ></i> </button>
 </a>
 </div>
 

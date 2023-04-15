@@ -1,20 +1,12 @@
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
-export default function LandingPageHeroComponent() {
+export default function LandingPageHeroComponent({setAllBooks,setLoading}) {
   const navigate = useNavigate();
-  const navigateToProfile = () => {
-    navigate("/profile");
-  };
+
   return (
 
     <div className="static  bg-hero  bg-cover">
-    <button
-    className="font-[Parisienne]  text-black w-[200px] bg-white flex rounded-md"
-    onClick={navigateToProfile}
-  >
-    <box-icon name='group' size='lg'></box-icon>
-    <p className="mt-3">Profile</p>
-  </button>
+ 
       <div className="w-full h-[25rem] flex justify-center items-center bg-black/50   flex-col">
       
         <div className="w-10/12 flex flex-row justify-center items-center  my-5 text-xl ">
@@ -27,7 +19,7 @@ export default function LandingPageHeroComponent() {
           </span>
         </div>
 
-        <SearchBar />
+        <SearchBar setAllBooks={setAllBooks} setLoading={setLoading} />
       </div>
     </div>
   );

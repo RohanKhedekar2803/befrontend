@@ -14,7 +14,7 @@ export const getAllBooks = async (limit, skip) => {
 
 export const getFilteredBooks = async (filter) => {
   return await axios
-    .get(`${baseURL}${bookRoute}/filter`, filter, getHeader())
+    .get(`${baseURL}${bookRoute}/filter?${filter}`, getHeader())
     .then((res) => {
       return res.data;
     })
@@ -22,6 +22,18 @@ export const getFilteredBooks = async (filter) => {
       return { err: "error occurred" };
     });
 };
+
+export const getSearchedBooks = async (title) => {
+  return await axios
+    .get(`${baseURL}${bookRoute}/search?search=${title}`, getHeader())
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return { err: "error occurred" };
+    });
+};
+
 
 export const getBookById = async (id) => {
   return await axios
@@ -157,32 +169,4 @@ export const getAllCategories = async()=>{
 
 // http://localhost:8000/api/books/filter?author=Seth Godin
 
-export const getDataByAuthor = async (authorName) => {
-  return await axios.get(`${baseURL}${bookRoute}/filter?author=${authorName}`, getHeader())
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      return { err: "error occurred" };
-    });
-}
 
-export const getByPrice = async (minPrice , maxPrice) => {
-  return await axios.get(`${baseURL}${bookRoute}/filter?minPrice=${minPrice}&maxPrice=${maxPrice}`, getHeader())
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      return { err: "error occurred" };
-    });
-}
-
-export const getDataByCategory = async (category) => {
-  return await axios.get(`${baseURL}${bookRoute}/filter?category=${category}`, getHeader())
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      return { err: "error occurred" };
-    });
-}

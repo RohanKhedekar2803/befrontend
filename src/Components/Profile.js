@@ -7,39 +7,29 @@ import Wishlisted from "./Wishlisted";
 import { useAuthState } from "../context/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import { LogOut } from "../Services/Auth";
+import { Logout } from "../Services/Auth";
 import { ToastContainer, toast } from "react-toastify";
 const Profile = () => {
   const navigate = useNavigate();
   const state = useAuthState();
   const notify = (msg) => toast(msg);
-  //useffect and use state to store current bookks data
-  var books = [];
-  // for (var i = 0; i < 6; i++) {
-  //   books.push(<BookShowcaseCard/>);
-  // }
-  // const slideLeft = () => {
-  //   var slider = document.getElementById('slider' );
-  //   console.log(slider)
-  //   slider.scrollLeft = slider.scrollLeft - 500;
-  // };
-  // const slideRight = () => {
-  //   var slider = document.getElementById('slider' );
-  //   slider.scrollLeft = slider.scrollLeft + 500;
-  // };
-  const logout = () => {
-    LogOut(localStorage.getItem("currentUser"));
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("token");
+
+  const logout = async () => {
+    await Logout();
+    localStorage.getItem("currentUser");
     notify("Logout successfull !!");
     navigate("/");
   };
-  // const [options ,setOptions]= useState([
-  //       {text : 'Recommended' , status :true}
-  //     , {text : 'Wishlist' , status :false}
-  //     ,{text : 'Read' , status :false}
-  //   ])
-  const [option, setOption] = useState(2);
+
+  const [option, setOption] = useState(1);
+
+  const tabOptions = [
+    { id: 1, name: "Reccomended" },
+    { id: 2, name: "Wishlist" },
+    { id: 3, name: "Already Read" },
+
+  ];
+
   return (
     <>
       <div className=" grid grid-cols-1 md:grid-cols-3 min-h-[30%] w-full bg-blue-700 place-items-center items-center py-7">
@@ -59,26 +49,18 @@ const Profile = () => {
       </div>
 
       <div className="py-4"></div>
-      <div className="w-full  flex flex-col md:flex-row place-items-center justify-evenly">
-        <div className="py-2 md:py-0"></div>
-        <div className="h-10 w-64 bg-blue-700 opacity-80  flex justify-between  text-white rounded-md" onClick={() => {setOption(1); console.log("recomend click")}}>
-          <button className="mx-auto" >
-            Recommended Books
-          </button>
-        </div>
-
-        <div className="py-2 md:py-0"></div>
-        <div className="h-10 w-64 bg-blue-700 opacity-80  flex   text-white rounded-md" onClick={() => {setOption(2); console.log("wishlist click")}}>
-          <button className="mx-auto" >
-            Wishlist
-          </button>
-        </div>
-        <div className="py-2 md:py-0"></div>
-        <div className="h-10 w-64 bg-blue-700 opacity-80  flex justify-between  text-white rounded-md" onClick={() => {setOption(3); console.log("already read")}}>
-          <button className="mx-auto" >
-            Already Read
-          </button>
-        </div>
+      <div className="w-11/12 mx-auto bg-blue-600/10 rounded-md  grid-cols-1 grid md:grid-cols-3">
+        {tabOptions.map((ele) => {
+          return option === ele.id ? (
+            <button className="px-10  bg-blue-500 rounded-md text-white font-semibold py-2.5 ">
+              {ele.name}
+            </button>
+          ) : (
+            <button onClick={()=>{setOption(ele.id)}} className="px-10 rounded-md  text-blue-500 font-semibold py-2.5 ">
+              {ele.name}
+            </button>
+          );
+        })}
       </div>
       <div className="py-5"></div>
       {option === 1 ? <Recommended /> : ""}

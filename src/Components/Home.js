@@ -2,32 +2,25 @@ import LandingPageHeroComponent from "./LandingPageHeroComponent";
 import React, { useEffect, useState } from "react";
 import { getAllBooks, searchBooks } from "../Services/Book";
 import BookShowcaseCard from "./BookShowcaseCard";
-import { useFetcher, useLocation } from "react-router-dom";
+import {
+  Link,
+  useFetcher,
+  useLocation,
+  useNavigate,
+  useNavigation,
+  useRoutes,
+} from "react-router-dom";
 import Filter from "./filters/Filter";
+import Loader from "./Loader";
+import { Logout } from "../Services/Auth";
 
 function Home() {
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
+
   const [skip, setSkip] = useState(1);
-  const [filterData, setFilterData] = useState([]);
-  const [sortData, setSortData] = useState([]);
+
   const [allData, setAllData] = useState([]);
 
-  const getSearchBooks = async (search) => {
-    if (query.get("search")) {
-      const res = await searchBooks(search);
-      if (res) {
-        console.log(res);
-        setAllData(res);
-      }
-    } else {
-      const res = await getAllBooks(50, skip);
-      if (res) {
-        setAllData(res);
-      }
-    }
-  };
   const handlePrevious = () => {
     if (skip > 1) {
       setSkip(skip - 1);
@@ -38,47 +31,78 @@ function Home() {
   };
 
   const getBooks = async () => {
+    setloading(true);
     const limit = 50;
     const res = await getAllBooks(limit, skip);
     if (res) {
       setAllData(res);
+      setloading(false);
     }
   };
 
+  const [loading, setloading] = useState(true);
+
   useEffect(() => {
-    getSearchBooks(query.get("search"));
     getBooks();
-  }, [location, skip]);
+  }, []);
 
   const updateAllData = (data) => {
     setAllData(data);
   };
+
+  const logoutUser = async () => {
+    const data = await Logout();
+    if (data) {
+      navigate("/");
+    }
+  };
+
   return (
     <div>
-      <LandingPageHeroComponent />
+      <div className="w-full bg-white ">
+        <div className="flex w-10/12 min-h-[10vh] items-center mx-auto justify-between">
+          <h1 className="text-[#5F6DF8] font-semibold text-2xl  font-serif">
+            Book Finder
+          </h1>
+
+          <div className="flex ">
+            <Link to={'/profile'}>
+              <button className="text-2xl">
+                <i class="bx hover:text-[#5F6DF8] bxs-user-circle"></i>
+              </button>
+            </Link>
+            <div onClick={logoutUser} className="ml-4 text-2xl">
+              <i class="bx hover:text-[#5F6DF8] bx-log-out-circle"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <LandingPageHeroComponent
+        setLoading={setloading}
+        setAllBooks={updateAllData}
+      />
 
       <div className="md:mx-32">
-        <div className="h-10" />
-        <div className="mx-5 text-black font-['DM Sans'] font-semibold text-3xl">
-          Categories{" "}
-          {query.get("search") && (
-            <button
-              className="text-[#5F6DF8] font-semibold text-sm p-1 ml-2 rounded-lg bg-[#EDEFFF]"
-              onClick={() => {
-                window.history.back();
-              }}
-            >
-              Clear Search
-            </button>
+        <h1 className="font-bold my-5 mx-5 text-2xl">Category</h1>
+        {/* Filter & Sort */}
+        <Filter
+          setLoading={setloading}
+          skip={skip}
+          setAllData={updateAllData}
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 w-full place-items-center justify-evenly gap-x-5 gap-y-5 ">
+          {!loading && allData.length ? (
+            allData.map((data) => {
+              return <BookShowcaseCard data={data}></BookShowcaseCard>;
+            })
+          ) : (
+            <div></div>
           )}
         </div>
-        {/* Filter & Sort */}
-        <Filter skip={skip} setAllData={updateAllData} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 w-full place-items-center justify-evenly gap-x-5 gap-y-5 ">
-          {allData.length?allData.map((data) => {
-            return <BookShowcaseCard data={data}></BookShowcaseCard>;
-          }) :  <div></div>}
+        <div className="loader flex justify-center items-center w-full  my-20">
+          {loading && <Loader />}
         </div>
 
         <div className="mt-4 flex justify-center gap-x-2 mb-4">

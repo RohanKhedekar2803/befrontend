@@ -1,15 +1,25 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-export default function SearchBar() {
-  const [search, setSearch] = useState("");
-  const navigate = useNavigate();
+import { getSearchedBooks } from "../Services/Book";
 
-  const handleQuery = (event) => {
-    event.preventDefault();
-    const newSearchQuery = search;
-    setSearch(newSearchQuery);
-    navigate(`/home?search=${newSearchQuery}`);
-  };
+export default function SearchBar({setAllBooks,setLoading}) {
+
+
+  const [search, setsearch] = useState('');
+
+  const searchBooks =async (ev)=>{
+    setLoading(true)
+    ev.preventDefault()
+    console.log(search)
+   const data = await getSearchedBooks(search);
+   if(data){
+    setLoading(false)
+    setAllBooks(data)
+    return;
+   }else{
+    alert('error occurred')
+   }
+   setLoading(false)
+  }
 
   return (
     <form class="flex items-center w-9/12 font-DMsans">
@@ -36,7 +46,7 @@ export default function SearchBar() {
           placeholder="Search Your Favourite Book"
           required
           onChange={(e) => {
-            setSearch(e.target.value);
+            setsearch(e.target.value);
           }}
           type="text"
           id="simple-search"
@@ -45,7 +55,7 @@ export default function SearchBar() {
       </div>
       <button
         type="submit"
-        onClick={handleQuery}
+        onClick={ev=>{searchBooks(ev)}}
         class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
         <svg
