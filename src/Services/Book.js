@@ -43,7 +43,7 @@ export const getwishlistedbooksbyid = async (id) => {
   })
 }
 export const addtowishlist = async (userid,bookId) =>{
-  console.log("add to wishlist called")
+  console.log("add to wishlist api called")
   return await axios.post(`${baseURL}/api/user/${userid}/wishlist`,{bookId}, getHeader()).then((res) => {
     return res.data;
   }).catch((err) => {
@@ -51,16 +51,17 @@ export const addtowishlist = async (userid,bookId) =>{
   })
 }
 
-// export const getrecommendedbooksbyid = `async(id)=>{
-//     return await axios.get( tobedone  ,getHeader()).then((res)=>{
-//         return res.data;
-//     }).catch((err)=>{
-//         return {err:"error occurred"}
-//     })
-// }
+export const getrecommendedbooksbyid = async(id)=>{
+  console.log("recomended api call")
+    return await axios.get( `${baseURL}/api/user/${id}/getRecommendations`  ,getHeader()).then((res)=>{
+        return res.data;
+    }).catch((err)=>{
+        return {err:"error occurred"}
+    })
+}
 
 export const getreadbooksbyid = async (id) => {
-
+  console.log("read api call")
   return await axios.get(`${baseURL}/api/user/${id}/readBooks`, getHeader()).then((res) => {
     console.log(res.data)
     return res.data;

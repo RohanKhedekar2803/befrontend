@@ -39,7 +39,7 @@ const Profile = () => {
   //     , {text : 'Wishlist' , status :false}
   //     ,{text : 'Read' , status :false}
   //   ])
-  const [option, setOption] = useState(1);
+  const [option, setOption] = useState(2);
   return (
     <>
       <div className=" grid grid-cols-1 md:grid-cols-3 min-h-[30%] w-full bg-blue-700 place-items-center items-center py-7">
@@ -61,21 +61,21 @@ const Profile = () => {
       <div className="py-4"></div>
       <div className="w-full  flex flex-col md:flex-row place-items-center justify-evenly">
         <div className="py-2 md:py-0"></div>
-        <div className="h-10 w-64 bg-blue-700 opacity-80  flex justify-between  text-white rounded-md">
-          <button className="mx-auto" onClick={() => setOption(1)}>
+        <div className="h-10 w-64 bg-blue-700 opacity-80  flex justify-between  text-white rounded-md" onClick={() => {setOption(1); console.log("recomend click")}}>
+          <button className="mx-auto" >
             Recommended Books
           </button>
         </div>
 
         <div className="py-2 md:py-0"></div>
-        <div className="h-10 w-64 bg-blue-700 opacity-80  flex   text-white rounded-md">
-          <button className="mx-auto" onClick={() => setOption(2)}>
+        <div className="h-10 w-64 bg-blue-700 opacity-80  flex   text-white rounded-md" onClick={() => {setOption(2); console.log("wishlist click")}}>
+          <button className="mx-auto" >
             Wishlist
           </button>
         </div>
         <div className="py-2 md:py-0"></div>
-        <div className="h-10 w-64 bg-blue-700 opacity-80  flex justify-between  text-white rounded-md">
-          <button className="mx-auto" onClick={() => setOption(3)}>
+        <div className="h-10 w-64 bg-blue-700 opacity-80  flex justify-between  text-white rounded-md" onClick={() => {setOption(3); console.log("already read")}}>
+          <button className="mx-auto" >
             Already Read
           </button>
         </div>

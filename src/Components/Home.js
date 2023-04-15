@@ -76,9 +76,9 @@ function Home() {
         <Filter skip={skip} setAllData={updateAllData} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 w-full place-items-center justify-evenly gap-x-5 gap-y-5 ">
-          {allData.map((data) => {
+          {allData.length?allData.map((data) => {
             return <BookShowcaseCard data={data}></BookShowcaseCard>;
-          })}
+          }) :  <div></div>}
         </div>
 
         <div className="mt-4 flex justify-center gap-x-2 mb-4">

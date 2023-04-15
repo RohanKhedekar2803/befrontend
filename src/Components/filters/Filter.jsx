@@ -79,6 +79,9 @@ const Filter = ({ setAllData, skip }) => {
   const filterByPrice = async () => {
     const data = await getByPrice(minPrice, maxPrice);
     console.log(data);
+    if (data) {
+      setAllData(data);
+    }
   };
   return (
     <div className="grid gap-5 my-5 grid-cold-1 md:grid-cols-3 align-center mx-auto w-[90%]">
