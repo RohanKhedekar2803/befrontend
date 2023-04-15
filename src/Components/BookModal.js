@@ -39,8 +39,7 @@ export default function BookModal({ handleClose, data }) {
       return;
     }
     addtowishlist(state.auth.user.id, data._id).then((res) => console.log(res));
-    setWishlisted(true);
-    alert('added book to wishlist successfully !!')
+    // setWishlisted(true);
   };
   const addtoRead = async () => {
     if(setRead){
@@ -48,10 +47,18 @@ export default function BookModal({ handleClose, data }) {
       return;
     }
     addtoread(state.auth.user.id, data._id).then((res) => console.log(res));
-    setRead(true);
-    alert('added book to readlist successfully !!')
-
+    // setRead(true);
   };
+  const addwishlist =async () =>{
+    setWishlisted(!wishlisted);
+    console.log(state.auth.user.id, data._id);
+    addtowishlist(state.auth.user.id, data._id).then((res) => console.log(res));
+  }
+
+  const addread = async ()=>{
+    addtoread(state.auth.user.id, data._id).then((res) => console.log(res));
+    setRead(!read);
+  }
 
 
   return (
@@ -77,6 +84,7 @@ export default function BookModal({ handleClose, data }) {
   })}
  </div>
       <h1 className="font-bold my-2.5"> ₹ {data['Paperback/Hardcover Price']}</h1>
+      
     </div>
    </div>
 
@@ -90,8 +98,15 @@ export default function BookModal({ handleClose, data }) {
 <div className="col px-2.5">
 <div className="flex justify-between items-cent">
 <div className="flex p-2.5 rounded-md mb-2.5 w-max rounde-md bg-[#EDEFFF] text-[#5F6DF8] justify-between items-center">
-  {data['Sub-Category']}
+  {data['Category']}
+  
  </div>
+ <div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md  bg-[#EDEFFF] text-[#5F6DF8]" onClick={addwishlist}> Add to wishlist
+ {wishlisted?<box-icon name='check'></box-icon>:<div></div>}
+ </div>
+  <div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md bg-[#EDEFFF] text-[#5F6DF8]" onClick={addread}> Already Read
+  {read?<box-icon name='check'></box-icon>:<div></div>}
+  </div>
  <div className="close">
  <i class='bx bxs-x-circle text-3xl cursor-pointer text-red-500' onClick={()=>handleClose()}></i>
  </div>

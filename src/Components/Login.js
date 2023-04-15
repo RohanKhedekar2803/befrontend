@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../assets/logo.svg";
 
-import hero from "../assets/hero.png";
+import hero from "../assets/rectangle1.jpg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
@@ -58,13 +58,9 @@ const Login = () => {
           pauseOnHover
           theme="light"
         />
-        <div className="div flex mx-1  w-8/12">
-          <span className="w-3 h-3 rounded-full mr-2.5 bg-red-500"></span>
-          <span className="w-3 h-3 rounded-full mr-2.5 bg-yellow-500"></span>
-          <span className="w-3 h-3 rounded-full mr-2.5 bg-green-500"></span>
-        </div>
+        
         <div className="w-8/12 ">
-          <img src={logo} className="w-42 my-5" alt="" />
+          <p className="text-6xl font-semibold text-blue-600/100 tailwind-regular">Book Finder</p>
           <h1 className="   font-bold mt-5 mb-1 text-left text-4xl">
             Create Your Account
           </h1>
