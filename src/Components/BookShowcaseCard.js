@@ -43,6 +43,8 @@ export default function BookShowcaseCard({ data  }) {
     return <i class='bx bxs-star text-[#F4C055]'></i>
   })}
  </div>
+ <h1 className=" my-2.5"> No. of reviews -   {data['Number of ratings']}</h1>
+      
       <h1 className="font-bold my-2.5"> ₹ {data['Paperback/Hardcover Price']}</h1>
       
     </div>

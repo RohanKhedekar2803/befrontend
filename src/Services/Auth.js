@@ -7,7 +7,8 @@ export const LoginUser = async(payload)=>{
     return await axios.post(`${baseURL}${authRoute.signin}`,payload).then((res)=>{
         return res.data;
     }).catch((err)=>{
-        return {err}
+        console.log(err.response.data.error)
+        return {err:err.response.data.error}
     })
 
 }

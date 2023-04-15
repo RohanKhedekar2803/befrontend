@@ -97,32 +97,17 @@ export default function BookModal({ handleClose, data }) {
 
 <div className="col px-2.5">
 <div className="flex justify-between items-cent">
-<div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md  bg-[#EDEFFF] text-[#5F6DF8]" onClick={addwishlist}> Add to wishlist
+<div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md  bg-[#EDEFFF] text-[#5F6DF8]" onClick={addwishlist}> 
 {data['Category']}
   
  </div>
 
- <div className="hidden justify-between md:flex">
- <div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md  bg-[#EDEFFF] text-[black]" onClick={addwishlist}> Add to wishlist
- {wishlisted?<box-icon name='check'></box-icon>:<div></div>}
- </div>
-  <div className="font-bold mx-2 my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md bg-[#EDEFFF] text-[black]" onClick={addread}> Already Read
-  {read?<box-icon name='check'></box-icon>:<div></div>}
-  </div>
- </div>
+
  <div className="close">
  <i class='bx bxs-x-circle text-3xl cursor-pointer text-red-500' onClick={()=>handleClose()}></i>
  </div>
 </div>
 
-<div className="md:hidden w-full  block">
- <div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md  bg-[#EDEFFF] text-[#5F6DF8]" onClick={addwishlist}> Add to wishlist
- {wishlisted?<box-icon name='check'></box-icon>:<div></div>}
- </div>
-  <div className="font-bold my-2.5 p-2.5 rounded-md mb-2.5 w-max rounde-md bg-[#EDEFFF] text-[#5F6DF8]" onClick={addread}> Already Read
-  {read?<box-icon name='check'></box-icon>:<div></div>}
-  </div>
- </div>
 
  <h1 className="font-bold text-xl "> {data.Title} </h1>
 

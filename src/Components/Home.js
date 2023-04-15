@@ -41,10 +41,9 @@ function Home() {
   };
 
   const [loading, setloading] = useState(true);
-
   useEffect(() => {
     getBooks();
-  }, []);
+  }, [skip]);
 
   const updateAllData = (data) => {
     setAllData(data);

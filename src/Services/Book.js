@@ -125,8 +125,8 @@ export const getCategories = async () => {
 // }
 
 // sort by price
-export const getBooksBySort = async (sortBy,limit, skip) => {
-  return await axios.get(`${baseURL}${bookRoute}/sort/${sortBy}?order=asc/dsc&limit=${limit}&skip=${skip}`, getHeader())
+export const getBooksBySort = async (sortBy,limit, skip,query) => {
+  return await axios.get(`${baseURL}${bookRoute}/sort/${sortBy}?limit=${limit}&skip=${skip}&${query}`, getHeader())
     .then((res) => {
       return res.data;
     })

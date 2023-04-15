@@ -51,13 +51,16 @@ const Filter = ({ setAllData, setLoading, skip }) => {
   };
 
   const sortBy = async (selectedOption) => {
+    let query = ''
     setLoading(true);
     if (selectedOption.value === "Sort By") {
       setLoading(false);
       return;
+    }else if(selectedOption.value === "rating"){
+      query = 'order=desc'
     }
-    setsortDataBy(selectedOption.value)
-    const data = await getBooksBySort(selectedOption.value, 50, skip);
+   
+    const data = await getBooksBySort(selectedOption.value, 50, skip,query);
     console.log(data);
     if (data) {
       setAllData(data);
