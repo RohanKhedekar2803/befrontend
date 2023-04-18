@@ -16,7 +16,6 @@ export default function BookShowcaseCard({ data }) {
   };
 
   const getRating = () => {
-
     return new Array(Math.floor(data['Rating out of 5 stars'])).fill(0);
   }
 

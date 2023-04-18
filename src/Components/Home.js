@@ -16,15 +16,12 @@ import { Logout } from "../Services/Auth";
 
 function Home() {
   const navigate = useNavigate();
-
-  const [filterchange, setFilterChange] = useState(false);
-  const [sortchange, setSortChange] = useState(false);
-
   const [skip, setSkip] = useState(1);
-
   const [allData, setAllData] = useState([]);
   const limit = 50;
-
+  const [selectedAuthor, setselectedAuthor] = useState("");
+  const [selectedCategory, setselectedCategory] = useState("");
+  const [sortDataBy, setsortDataBy] = useState("rating");
   const handlePrevious = () => {
     if (skip > 1) {
       setSkip(skip - 1);
@@ -46,16 +43,11 @@ function Home() {
   const [loading, setloading] = useState(true);
 
   useEffect(() => {
-
-    // if filter and sort is there then dont call getBooks
-    // if (filterchange || sortchange) {
-    //   console.log(filterchange,sortchange,"Im")
+    // if any filter or sort is applied then dont call getBooks()
+    // if (selectedAuthor || selectedCategory || sortDataBy) {
     //   return;
     // }
-    // else {
-      console.log("Im called")
-      getBooks();
-    // }
+    getBooks();
   }, [skip]);
 
   const updateAllData = (data) => {
@@ -80,11 +72,11 @@ function Home() {
           <div className="flex ">
             <Link to={'/profile'}>
               <button className="text-2xl">
-                <i class="bx hover:text-[#5F6DF8] bxs-user-circle"></i>
+                <i className="bx hover:text-[#5F6DF8] bxs-user-circle"></i>
               </button>
             </Link>
             <div onClick={logoutUser} className="ml-4 text-2xl">
-              <i class="bx hover:text-[#5F6DF8] bx-log-out-circle"></i>
+              <i className="bx hover:text-[#5F6DF8] bx-log-out-circle"></i>
             </div>
           </div>
         </div>
@@ -101,8 +93,13 @@ function Home() {
           setLoading={setloading}
           skip={skip}
           setAllData={updateAllData}
-          setFilterChange={setFilterChange}
-          setSortChange={setSortChange}
+          selectedAuthor={selectedAuthor}
+          setselectedAuthor={setselectedAuthor}
+          selectedCategory={selectedCategory}
+          setselectedCategory={setselectedCategory}
+          sortDataBy={sortDataBy}
+          setsortDataBy={setsortDataBy}
+
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 w-full place-items-center justify-evenly gap-x-5 gap-y-5 ">

@@ -3,21 +3,20 @@ import {
   getBooksBySort,
   getAllAuthors,
   getAllCategories,
-  getDataByCategory,
   getFilteredBooks,
 } from "../../Services/Book";
 import Select from "react-select";
 import AuthorSelect from "./AuthorSelect";
 
-const Filter = ({ setAllData, setLoading, skip,setFilterChange,setSortChange }) => {
+const Filter = ({ setAllData, setLoading, skip,setselectedAuthor,selectedAuthor,selectedCategory,setselectedCategory,sortDataBy,setsortDataBy}) => {
   const [author, setAuthor] = useState(null);
   const [minPrice, setminPrice] = useState(100);
   const [maxPrice, setmaxPrice] = useState(1000);
   const [categories, setcategories] = useState([]);
 
-  const [selectedAuthor, setselectedAuthor] = useState("");
-  const [selectedCategory, setselectedCategory] = useState("");
-  const [sortDataBy, setsortDataBy] = useState("rating");
+  // const [selectedAuthor, setselectedAuthor] = useState("");
+  // const [selectedCategory, setselectedCategory] = useState("");
+  // const [sortDataBy, setsortDataBy] = useState("rating");
 
   const getAuthors = async () => {
     const data = await getAllAuthors();
@@ -84,7 +83,6 @@ const Filter = ({ setAllData, setLoading, skip,setFilterChange,setSortChange }) 
               { value: "Sort By", label: "Sort By" },
               { value: "rating", label: "Ratings" },
               { value: "price", label: "Price" },
-              { value: "noOfReviews", label: "Number of reviews" },
             ]}
             onChange={sortBy}
             className="w-full text-[#5F6DF8]"
