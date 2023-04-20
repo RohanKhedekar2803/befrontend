@@ -8,7 +8,7 @@ import {
 import Select from "react-select";
 import AuthorSelect from "./AuthorSelect";
 
-const Filter = ({ setAllData, setLoading, skip,setselectedAuthor,selectedAuthor,selectedCategory,setselectedCategory,sortDataBy,setsortDataBy}) => {
+const Filter = ({ setAllData, setLoading, skip, setselectedAuthor, selectedAuthor, selectedCategory, setselectedCategory, sortDataBy, setsortDataBy }) => {
   const [author, setAuthor] = useState(null);
   const [minPrice, setminPrice] = useState(100);
   const [maxPrice, setmaxPrice] = useState(1000);
@@ -70,12 +70,6 @@ const Filter = ({ setAllData, setLoading, skip,setselectedAuthor,selectedAuthor,
   return (
     <>
       {/* Filters */}
-      <div className="w-full mx-auto p-4">
-        {
-          author && <AuthorSelect
-            authors={author} />
-        }
-      </div>
       <div className="block md:grid grid-cols-4 gap-4 w-full px-5 my-10 mx-auto">
         <div className="w-full my-5">
           <Select
@@ -131,9 +125,14 @@ const Filter = ({ setAllData, setLoading, skip,setselectedAuthor,selectedAuthor,
               required
             />
           </div>
-
         </div>
-        <div className="w-full justify-center items-center mx-2 flex ">
+        <div className="w-full mx-auto p-4">
+          {
+            author && <AuthorSelect
+              authors={author} />
+          }
+        </div>
+        <div className="w-full justify-center items-center flex ">
           <button
             onClick={() => {
               filterBooks();
